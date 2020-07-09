@@ -71,7 +71,7 @@ pipeline {
             def inputFile = readFile('.//package.json')
             def packageJson = new JsonSlurper().parseText(inputFile)
             println("Version_number:${packageJson.version}")
-            version=="${Version_number}"
+            //version=="${Version_number}"
             //println ("${version}")
 
             
