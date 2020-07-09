@@ -14,8 +14,8 @@ pipeline {
     image = "dummy_image"
     version = "2.1.0"
     //version = "0.1.${env.BUILD_NUMBER}"
-    version = "${params.version}"
-    nextversion = "${params.nextversion}"
+    //version = "${params.version}"
+    //nextversion = "${params.nextversion}"
     branch_name="${env.GIT_BRANCH}".replace("origin/","")
     tag = "${branch_name =="master" ? "${version}" : "${version}-${branch_name}"}"
     imageTag = "/${image}:${tag}"
