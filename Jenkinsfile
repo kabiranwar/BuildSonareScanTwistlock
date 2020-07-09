@@ -1,5 +1,5 @@
-import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
+//import groovy.json.JsonSlurper
+//import groovy.json.JsonOutput
 
 pipeline {
 
@@ -41,8 +41,9 @@ pipeline {
 
     stage('Checkout') {
       steps {
-        checkout scm
+        //checkout scm
         script {
+          sh 'rm -Rf test-sourcecode/*'
           repo = checkout([
             $class: 'GitSCM',
             branches: [
@@ -50,8 +51,8 @@ pipeline {
             ],
             doGenerateSubmoduleConfigurations: false,
             userRemoteConfigs: [[
-              credentialsId: 'github-account-username-password',
-              url: "https://github.com/kabiranwar/test-sourcecode.git"
+              credentialsId: 'github-ssh-username-private-key',
+              url: "git@github.com:kabiranwar/test-sourcecode.git"
             ]],
             extensions: [
               [$class: 'CleanBeforeCheckout'], 
