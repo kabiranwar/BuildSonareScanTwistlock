@@ -62,7 +62,7 @@ pipeline {
         }
       }
     }
-    stage("Change version"){
+    /*stage("Change version"){
       steps{
         script{
           dir('test-sourcecode/client'){
@@ -74,7 +74,7 @@ pipeline {
             }
           }
         }
-      }
+      }*/
     }
   }
   
