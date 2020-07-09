@@ -70,7 +70,7 @@ pipeline {
             def packageJson = new JsonSlurper().parseText(inputFile)
             println("Version number:${packageJson.version}")
 
-            echo version number is: $Version number
+            echo version number is: "${Version number}"
             }
           }
         }
