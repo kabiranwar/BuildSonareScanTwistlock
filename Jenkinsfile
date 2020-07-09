@@ -74,6 +74,7 @@ pipeline {
             version="${Version_number}"
             
             
+            
 
           
           }
@@ -81,7 +82,7 @@ pipeline {
         
       }
     }
-    stage("Commit"){
+    /*stage("Commit"){
       steps{
         echo "{$version}"
         /*script{
@@ -99,13 +100,15 @@ pipeline {
           }
         }
       } */
-    }
-  }
-  }
-  post {
+    }*/
+    post {
     success {
       cleanWs()// deleteDirs: true
     }
   }
+
+  }
   
-}
+  
+  
+
