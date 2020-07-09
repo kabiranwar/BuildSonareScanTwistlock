@@ -70,13 +70,15 @@ pipeline {
           dir('test-sourcecode/client'){
             def inputFile = readFile('.//package.json')
             def packageJson = new JsonSlurper().parseText(inputFile)
-            version=println("Version number:${packageJson.version}")
-            echo $version
+            println("Version_number:${packageJson.version}")
+            version="${Version_number}"
+            
             
 
           
           }
         }
+        echo $version
       }
     }
     /*stage("Commit"){
