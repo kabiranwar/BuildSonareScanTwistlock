@@ -83,7 +83,7 @@ pipeline {
     }
     stage("Commit"){
       steps{
-        echo $version
+        echo "{$version}"
         /*script{
           dir('test-sourcecode'){
             // sshagent(credentials: ['github-ssh-username-private-key']){
