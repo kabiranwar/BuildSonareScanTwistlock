@@ -106,4 +106,5 @@ pipeline {
       cleanWs()// deleteDirs: true
     }
   }
+  }
 }
