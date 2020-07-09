@@ -78,12 +78,13 @@ pipeline {
           
           }
         }
-        echo $version
+        
       }
     }
-    /*stage("Commit"){
+    stage("Commit"){
       steps{
-        script{
+        echo $version
+        /*script{
           dir('test-sourcecode'){
             // sshagent(credentials: ['github-ssh-username-private-key']){
               sh """ git config --global user.name "kabiranwar" """
@@ -97,8 +98,8 @@ pipeline {
             // }
           }
         }
-      }
-    }*/
+      } */
+    }
   }
   post {
     success {
