@@ -1,6 +1,8 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
+//properties([parameters([string(defaultValue: '1.0.0', description: '', name: 'version', trim: false), string(defaultValue: '1.1.0', description: '', name: 'nextversion', trim: false)])])
+
 pipeline {
 
   agent any
@@ -21,7 +23,6 @@ pipeline {
     imageTag = "/${image}:${tag}"
   }
 
-
   stages {   
     stage('Cleanup') {
       steps {
@@ -38,7 +39,6 @@ pipeline {
         // sh 'printenv'
       }
     }
-
 
     stage('Checkout') {
       steps {
@@ -64,19 +64,41 @@ pipeline {
         }
       }
     }
-    /*stage("Change version"){
+    stage("Read version"){
       steps{
         script{
           dir('test-sourcecode/client'){
             def inputFile = readFile('.//package.json')
             def packageJson = new JsonSlurper().parseText(inputFile)
-            //println("version:${packageJson.version}")
+            println("Version number:${packageJson.version}")
 
-            
-            }
+          
           }
         }
-      }*/
+      }
+    }
+    stage("Commit"){
+      steps{
+        script{
+          dir('test-sourcecode'){
+            // sshagent(credentials: ['github-ssh-username-private-key']){
+              sh """ git config --global user.name "kabiranwar" """
+              sh """ git config --global user.email "anwarkabir2011@gmail.com" """
+              sh "git checkout -b ${params.version}-snapshot origin/master"
+              //after this we can run the git add acommit and push with jenkins command
+              sh 'git add client/package.json'
+              sh """git commit -m "Created new version ${params.version}" """
+              // sh("git push https://${username}:${password}@github.com/kabiranwar/test-sourcecode.git")
+              sh "git push origin ${params.version}-snapshot"
+            // }
+          }
+        }
+      }
     }
   }
-  
+  post {
+    success {
+      cleanWs()// deleteDirs: true
+    }
+  }
+}
