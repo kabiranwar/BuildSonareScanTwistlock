@@ -23,7 +23,7 @@ pipeline {
     imageTag = "/${image}:${tag}"
   }
 
-  stages {   
+  stages {  
     stage('Cleanup') {
       steps {
         //echo "This is ${env.GIT_BRANCH}"
@@ -101,10 +101,11 @@ pipeline {
       } */
     }
   }
+  }
   post {
     success {
       cleanWs()// deleteDirs: true
     }
   }
-  }
+  
 }
