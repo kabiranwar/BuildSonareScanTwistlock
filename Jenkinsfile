@@ -68,7 +68,7 @@ pipeline {
           dir('test-sourcecode/client'){
             def inputFile = readFile('.//package.json')
             def packageJson = new JsonSlurper().parseText(inputFile)
-            println("version:${packageJson.version}")
+            //println("version:${packageJson.version}")
 
             
             }
