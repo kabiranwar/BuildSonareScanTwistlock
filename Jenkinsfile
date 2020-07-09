@@ -14,7 +14,7 @@ pipeline {
   environment {
     TIMESTAMP = new java.text.SimpleDateFormat('yyyyMMdd').format(new Date())
     image = "dummy_image"
-    version = 2.1.0
+    version = "2.1.0"
     //version = "0.1.${env.BUILD_NUMBER}"
     //version = "${params.version}"
     //nextversion = "${params.nextversion}"
@@ -34,7 +34,7 @@ pipeline {
         //echo "tag is:  ${env.tag}"
         echo "tag is : $tag"
         echo "new version is: ${version}"
-        echo "next version is : ${nextversion}"
+        //echo "next version is : ${nextversion}"
         echo "branch name is : ${branch_name}"
         // sh 'printenv'
       }
