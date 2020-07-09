@@ -1,8 +1,6 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-properties([parameters([string(defaultValue: '1.0.0', description: '', name: 'version', trim: false), string(defaultValue: '1.1.0', description: '', name: 'nextversion', trim: false)])])
-
 pipeline {
 
   agent any
@@ -72,31 +70,11 @@ pipeline {
             def packageJson = new JsonSlurper().parseText(inputFile)
             println("Version number:${packageJson.version}")
 
-            if (packageJson.version==params.version){
-              println ("You can not have version ${packageJson.version}")
-            }else{
-              println "Wollah you have new version to add"
-              //Add the new version to object of package.json file
-              packageJson.version=params.version
-              //Print the newly created json object of package,json  file
-              println(packageJson)
-              //convert packagejson object to json string to print or save as file
-              def newPackageFile = JsonOutput.toJson(packageJson)
-              //print the json object as string
-              println(newPackageFile)
-              //write json string to file with write file 
-              //it will replace ols json files version with new json file
-              writeFile(file: 'package.json', text:newPackageFile.toString())
-              // to print json file which is newly created just reading the file and printing it 
-              // this line can be ignored 
-              inputFile = readFile('.//package.json')
-              //println("-------------------------------------------------------------")
-              //println(inputFile)
-              //after this we can run the git add acommit and push with jenkins command
+            echo "${packageJson.version}"
             }
           }
         }
       }
     }
   }
-}  
+  
