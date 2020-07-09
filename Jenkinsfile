@@ -1,5 +1,5 @@
-//import groovy.json.JsonSlurper
-//import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
 
 pipeline {
 
@@ -14,12 +14,13 @@ pipeline {
     image = "dummy_image"
     version = "2.1.0"
     //version = "0.1.${env.BUILD_NUMBER}"
-    //version = "${params.version}"
-    //nextversion = "${params.nextversion}"
+    version = "${params.version}"
+    nextversion = "${params.nextversion}"
     branch_name="${env.GIT_BRANCH}".replace("origin/","")
     tag = "${branch_name =="master" ? "${version}" : "${version}-${branch_name}"}"
     imageTag = "/${image}:${tag}"
   }
+
 
   stages {   
     stage('Cleanup') {
@@ -33,7 +34,7 @@ pipeline {
         echo "tag is : $tag"
         echo "new version is: ${version}"
         echo "next version is : ${nextversion}"
-        //echo "branch name is : ${branch_name}"
+        echo "branch name is : ${branch_name}"
         // sh 'printenv'
       }
     }
