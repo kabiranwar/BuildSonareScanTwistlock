@@ -85,7 +85,7 @@ pipeline {
     /*stage("Commit"){
       steps{
         echo "{$version}"
-        /*script{
+        script{
           dir('test-sourcecode'){
             // sshagent(credentials: ['github-ssh-username-private-key']){
               sh """ git config --global user.name "kabiranwar" """
@@ -99,8 +99,9 @@ pipeline {
             // }
           }
         }
-      } */
+      } 
     }*/
+  }
     post {
     success {
       cleanWs()// deleteDirs: true
