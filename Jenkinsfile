@@ -33,7 +33,7 @@ pipeline {
         echo "tag is : $tag"
         echo "new version is: ${version}"
         echo "next version is : ${nextversion}"
-        echo "branch name is : ${branch_name}"
+        //echo "branch name is : ${branch_name}"
         // sh 'printenv'
       }
     }
