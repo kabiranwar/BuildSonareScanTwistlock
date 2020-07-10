@@ -72,11 +72,13 @@ pipeline {
             def packageJson = readJSON file:'package.json'
             println(packageJson)
             println("Version:${packageJson.version}")
-            env.version=packageJson.version
+            environment{  
+            version=packageJson.version
+            tag = "${env.branch_name =="master" ? "${version}" : "${version}-${env.branch_name}"}"
+            imageTag = "/${env.image}:${tag}"
+            }
             println("${env.version}")
             
-            env.tag = "${env.branch_name =="master" ? "${env.version}" : "${env.version}-${env.branch_name}"}"
-            imageTag = "/${env.image}:${env.tag}"
             //version=="${version}"
             //println($version)
             println ("${env.tag}")
