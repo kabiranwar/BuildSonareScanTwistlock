@@ -1,4 +1,4 @@
-import groovy.json.JsonSlurper
+//import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
 //properties([parameters([string(defaultValue: '1.0.0', description: '', name: 'version', trim: false), string(defaultValue: '1.1.0', description: '', name: 'nextversion', trim: false)])])
@@ -24,19 +24,20 @@ pipeline {
   }
 
   stages {  
-    stage('Cleanup') {
+    stage('initial env values') {
       steps {
         //echo "This is ${env.GIT_BRANCH}"
-        echo "This is ${branch_name}"
+        echo "This is ${env.branch_name}"
         //echo "${env.BRANCH_OVERRIDE}"
-        echo "image tag is: ${imageTag}"
+        echo "image tag is: ${env.imageTag}"
         //echo "image tag is: ${env.imageTag}"
         //echo "tag is:  ${env.tag}"
-        echo "tag is : $tag"
-        echo "new version is: ${version}"
+        echo "tag is : ${env.tag}"
+        echo "new version is: ${env.version}"
         //echo "next version is : ${nextversion}"
-        echo "branch name is : ${branch_name}"
-        // sh 'printenv'
+        echo "branch name is : ${env.branch_name}"
+        // 
+        sh 'printenv'
       }
     }
 
@@ -68,20 +69,36 @@ pipeline {
       steps{
         script{
           dir('test-sourcecode/client'){
-            def inputFile = readFile('.//package.json')
-            def packageJson = new JsonSlurper().parseText(inputFile)
-            println("Version_number:${packageJson.version}")
-            //version=="${Version_number}"
-            //println ("${version}")
+            def packageJson = readJSON file:'package.json'
+            println(packageJson)
+            println("Version:${packageJson.version}")
+            env.version=packageJson.version
+            println("${env.version}")
+            
+            env.tag = "${env.branch_name =="master" ? "${env.version}" : "${env.version}-${env.branch_name}"}"
+            imageTag = "/${env.image}:${env.tag}"
+            //version=="${version}"
+            //println($version)
+            println ("${env.tag}")
 
-            
-            
-            
-
-          
           }
         }
         
+      }
+    }
+    stage('changed env values') {
+      steps {
+        //echo "This is ${env.GIT_BRANCH}"
+        echo "This is ${env.branch_name}"
+        //echo "${env.BRANCH_OVERRIDE}"
+        echo "image tag is: ${env.imageTag}"
+        //echo "image tag is: ${env.imageTag}"
+        //echo "tag is:  ${env.tag}"
+        echo "tag is : ${env.tag}"
+        echo "new version is: ${env.version}"
+        //echo "next version is : ${nextversion}"
+        echo "branch name is : ${env.branch_name}"
+        // sh 'printenv'
       }
     }
     /*stage("Commit"){
